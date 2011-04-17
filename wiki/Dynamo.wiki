@@ -1,0 +1,38 @@
+#summary Dynamo Command
+
+= Introduction =
+
+*dynamo* is the command that provides generation facilities for an Ada project.
+It integrates various commands that represent a specific generation model.
+The general syntax is the following:
+
+{{{
+dynamo {command} {options}
+}}}
+
+
+= Creation Commands =
+
+== Project Creation ==
+
+{{{
+dynamo create-project <name>
+}}}
+
+==  Module Creation ==
+
+{{{
+dynamo create-module <name>
+}}}
+
+== Page Creation ==
+
+{{{
+dynamo create-page <name>
+}}}
+
+= Generation Commands =
+
+{{{
+dynamo generate model.xml
+}}}
