@@ -1,0 +1,18 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        xmlns:g="http://code.google.com/p/ada-ado/generator"
+        xmlns:f="http://java.sun.com/jsf/core"
+        file="db/#{projectName}-sql.sql">
+/* File generated automatically by dynamo */
+<h:list value="#{model.tables}" var="table">
+/* #{table.comment} */
+create table #{table.table} (
+<h:list value="#{table.members}" var="column">
+  /* #{column.comment} */
+  `#{column.sqlName}` #{column.sqlType},
+</h:list>
+  primary key (`#{table.id.name}`)
+);
+</h:list>
+</f:view>
