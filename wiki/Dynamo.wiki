@@ -37,16 +37,16 @@ layout is necessary, the
 == OPTIONS ==
 
 The following options are recognized by _dynamo_:
-.TP 5
+
 -o directory
 
 Specifies the directory where result files are created.  The default is the current directory.
-.TP 5
+
 -c directory
 
 Specifies the configuration directory which contains _dynamo_ configuration
 files as well as template files.
-.TP 5
+
 -t directory
 
 Specifies the templates directory.  This option can be used to override the
@@ -137,7 +137,6 @@ _gnatmake(1)_, _gcc(1)_
 == COPYRIGHT ==
 
 Copyright 2011 by Stephane Carrez.
-
 
 = Introduction =
 
