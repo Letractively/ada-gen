@@ -67,7 +67,7 @@ _gnatmake _ build file.  The application can be immediately compiled to obtain a
 to run.
 
 _The _ *create-database* _command _ 
- *create-database _connection admin-user [admin-password]_*
+*create-database _connection admin-user [admin-password]_*
 
 The create-database command creates the database used by the application.
 The database connection string is of the form: 
@@ -80,7 +80,7 @@ not yet exist. If a user is specified in the connection string, a grant command 
 issued to create that user and allow him to access the new database.
 
 _The _ *add-layout* _command _ 
- *add-layout _name_*
+*add-layout _name_*
 
 Create a new XHTML layout file.  The layout file is an XHTML facelet template which can
 be used by a web page to provide a common presentation layout.  When the project is
@@ -89,7 +89,7 @@ can provide different presentation styles.  The layout files are stored in the
 *web/WEB-INF/layouts* directory.
 
 _The _ *add-page* _command _ 
- *add-page _name_*
+*add-page _name_*
 
 Create a new presentation page.  The presentation page is an XHTML facelet file
 which contains HTML code as well as ASF facelet components.  The presentation
@@ -97,7 +97,7 @@ pages are stored in the
 *web* directory.
 
 _The _ *add-model* _command _ 
- *add-model [_module_] _name_*
+*add-model [_module_] _name_*
 
 Create a new database table model mapping.  The model mapping is an XML file that
 describes how to map a database table into an Ada type.
@@ -109,12 +109,12 @@ will have the name *_project-name_.Model*.  The Ada record will have the name
 
 
 _The _ *help* _command _ 
- *help _name_*
+*help _name_*
 
 Give an help description about a command.
 
 _The _ *generate* _command _ 
- *generate [_model ... _]*
+*generate [_model ... _]*
 
 Generate the Ada model implementation from the XML model mappings.
 The Ada model files are generated in the
@@ -124,7 +124,7 @@ When no file is specified, the
 *db* directory.  It will generate all the models found in those files.
 
 _The _ *propset* _command _ 
- *propset _name value_*
+*propset _name value_*
 
 Set a project property to configure some commands provided by
 *dynamo*.  The property is composed of a name and a value.  It is saved in
