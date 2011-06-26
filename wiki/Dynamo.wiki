@@ -55,7 +55,8 @@ templates provided by _dynamo_.
 == COMMANDS ==
 
 
-_The _ *create-project* _command _ 
+=== The create-project command ===
+
  *create-project _name_*
 
 Create a new project in the current working directory or in the
@@ -66,7 +67,7 @@ a Makefile as well as a
 _gnatmake _ build file.  The application can be immediately compiled to obtain a web server that is ready
 to run.
 
-_The _ *create-database* _command _ 
+=== The create-database command ===
 *create-database _connection admin-user [admin-password]_*
 
 The create-database command creates the database used by the application.
@@ -79,7 +80,7 @@ It will use the admin user for this connection. The database is created if it do
 not yet exist. If a user is specified in the connection string, a grant command is
 issued to create that user and allow him to access the new database.
 
-_The _ *add-layout* _command _ 
+=== The add-layout command ===
 *add-layout _name_*
 
 Create a new XHTML layout file.  The layout file is an XHTML facelet template which can
@@ -88,7 +89,7 @@ created, at least one layout is proposed.  By adding a new layout, the applicati
 can provide different presentation styles.  The layout files are stored in the
 *web/WEB-INF/layouts* directory.
 
-_The _ *add-page* _command _ 
+=== The add-page command ===
 *add-page _name_*
 
 Create a new presentation page.  The presentation page is an XHTML facelet file
@@ -96,7 +97,7 @@ which contains HTML code as well as ASF facelet components.  The presentation
 pages are stored in the
 *web* directory.
 
-_The _ *add-model* _command _ 
+=== The add-model command ===
 *add-model [_module_] _name_*
 
 Create a new database table model mapping.  The model mapping is an XML file that
@@ -108,13 +109,15 @@ will have the name *_project-name_.Model*.  The Ada record will have the name
 *_name__Ref*.
 
 
-_The _ *help* _command _ 
+=== The help command ===
 *help _name_*
 
 Give an help description about a command.
 
-_The _ *generate* _command _ 
+=== The generate command ===
+{{{
 *generate [_model ... _]*
+}}}
 
 Generate the Ada model implementation from the XML model mappings.
 The Ada model files are generated in the
@@ -123,8 +126,10 @@ When no file is specified, the
 *generate* command will read all the XML files stored in the
 *db* directory.  It will generate all the models found in those files.
 
-_The _ *propset* _command _ 
+=== The propset command ===
+{{{
 *propset _name value_*
+}}}
 
 Set a project property to configure some commands provided by
 *dynamo*.  The property is composed of a name and a value.  It is saved in
