@@ -164,30 +164,3 @@ The general syntax is the following:
 {{{
 dynamo {command} {options}
 }}}
-
-
-= Creation Commands =
-
-== Project Creation ==
-
-{{{
-dynamo create-project <name>
-}}}
-
-==  Module Creation ==
-
-{{{
-dynamo create-module <name>
-}}}
-
-== Page Creation ==
-
-{{{
-dynamo create-page <name>
-}}}
-
-= Generation Commands =
-
-{{{
-dynamo generate model.xml
-}}}
