@@ -1,0 +1,24 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        xmlns:g="http://code.google.com/p/ada-ado/generator"
+        xmlns:f="http://java.sun.com/jsf/core"
+        file="db/#{model.dirname ne 'src' ? model.dirname : ''}/mysql/#{projectName}-mysql.sql">
+/* File generated automatically by dynamo */
+<h:list value="#{model.tables}" var="table">
+/* #{table.comment} */
+CREATE TABLE #{table.table} (
+<h:list value="#{table.members}" var="column">
+  /* #{column.comment} */
+  `#{column.sqlName}` #{column.sqlType}#{column.unique ? ' UNIQUE' : ''} #{not column.isNull ? 'NOT NULL' : ''}#{column.name eq table.id.name and (table.id.generator eq 'increment') ? ' AUTO_INCREMENT' : ''},
+</h:list>
+  PRIMARY KEY (`#{table.id.sqlName}`)
+);
+</h:list>
+<h:panelGroup rendered="#{not empty model.tables}">
+INSERT INTO entity_type (name) VALUES
+  <h:list value="#{model.tables}" var="table">
+#{model.tables.rowIndex ge 2 ? ',' : ''}("#{table.table}")
+</h:list>;
+</h:panelGroup>
+</f:view>

@@ -1,0 +1,43 @@
+<f:view xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+        xmlns:g="http://code.google.com/p/ada-ado/generator"
+        xmlns:f="http://java.sun.com/jsf/core"
+        file="#{projectName}-server.adb">-----------------------------------------------------------------------
+--  #{fn:capitalize(projectName)}-server -- Application server
+<ui:include src="../../licenses/license-ada.xhtml"/>
+-----------------------------------------------------------------------
+with Ada.Exceptions;
+#{''}
+with Util.Log.loggers;
+#{''}
+with ASF.Server.Web;
+#{''}
+with #{fn:capitalize(projectName)}.Applications;
+procedure #{fn:capitalize(projectName)}.Server is
+#{''}
+   CONTEXT_PATH : constant String := "/#{projectName}";
+   Log     : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("#{fn:capitalize(projectName)}.Server");
+
+   App     : constant #{fn:capitalize(projectName)}.Applications.Application_Access := new #{fn:capitalize(projectName)}.Applications.Application;
+
+
+   WS      : ASF.Server.Web.AWS_Container;
+begin
+   #{fn:capitalize(projectName)}.Applications.Initialize (App);
+
+   WS.Register_Application (CONTEXT_PATH, App.all'Access);
+
+   Log.Info ("Connect you browser to: http://localhost:8080/#{projectName}/index.html");
+   WS.Start;
+
+   delay 365.0 * 24.0 * 3600.0;
+
+   App.Close;
+exception
+   when E: others =>
+      Log.Error ("Exception in server: " &amp;
+                 Ada.Exceptions.Exception_Name (E) &amp; ": " &amp;
+                 Ada.Exceptions.Exception_Message (E));
+end #{fn:capitalize(projectName)}.Server;
+</f:view>

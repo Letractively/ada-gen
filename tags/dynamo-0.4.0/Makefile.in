@@ -1,0 +1,153 @@
+# You may edit this makefile as long as you keep these original 
+# target names defined.
+MODE=debug
+GNATMAKE=gprbuild -XMODE=${MODE} -XPROCESSORS=4
+GNATCLEAN=gprclean
+GPRPATH=dynamo.gpr
+SVN=svn
+
+distdir=dynamo-@GEN_VERSION@
+
+DIST_FILE=dynamo-@GEN_VERSION@.tar.gz
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+datarootdir= @datarootdir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+
+top_builddir = .
+config_dir=${datadir}/dynamo
+
+MKDIR=mkdir
+CP=cp
+
+# Build executables for all mains defined by the project.
+build:
+	$(GNATMAKE) -P "$(GPRPATH)"
+
+# Not intended for manual invocation.
+# Invoked if automatic builds are enabled.
+# Analyzes only on those sources that have changed.
+# Does not build executables.
+autobuild:
+	$(GNATMAKE) -gnatc -c -k  -P "$(GPRPATH)"
+
+# Clean the root project of all build products.
+clean:
+	$(GNATCLEAN) -q -P "$(GPRPATH)"
+
+# Clean root project and all imported projects too.
+clean_tree:
+	$(GNATCLEAN) -P "$(GPRPATH)" -r
+
+# Check *all* sources for errors, even those not changed.
+# Does not build executables.
+analyze:
+	$(GNATMAKE) -f  -gnatc -c -k  -P "$(GPRPATH)"
+
+# Clean, then build executables for all mains defined by the project.
+rebuild: clean build
+
+test:	 build
+	-rm -rf test-app
+	-rm dynamo-junit.xml
+	mkdir test-app
+	regtests/run.sh 'Dynamo create project' ../bin/dynamo create-project test
+	regtests/run.sh 'Dynamo propset author' ../bin/dynamo propset author 'Druss'
+	regtests/run.sh 'Dynamo propset email' ../bin/dynamo propset author_email 'Druss@drenai.com'
+	regtests/run.sh 'Dynamo propset license' ../bin/dynamo propset license 'Apache'
+	regtests/run.sh 'Dynamo add module blog' ../bin/dynamo add-module blog
+	regtests/run.sh 'Dynamo add module user' ../bin/dynamo add-module user
+	regtests/run.sh 'Dynamo add model user' ../bin/dynamo add-model user
+	regtests/run.sh 'Dynamo add model blog' ../bin/dynamo add-model blog
+	regtests/run.sh 'Dynamo configure project' ./configure
+	regtests/run.sh 'Dynamo build generated app' make
+
+GENERATOR=dynamo
+
+generate:
+	$(GENERATOR) generate db
+
+# Files to package in source distribution
+DISTFILES=README LICENSE.txt NOTICE.txt CHANGES COPYING3 config.guess configure config.sub \
+configure.in Makefile.in install-sh ChangeLog \
+dynamo.gpr.in config.gpr \
+src \
+bin obj config doc db regtests
+
+dist:
+	-rm -rf $(distdir)
+	mkdir $(distdir)
+	-chmod 777 $(distdir)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+	-rm -f $(distdir)/bin/*
+	-rm -f $(distdir)/obj/*
+	tar --exclude=.svn --exclude="*~" --exclude="*.o" --exclude="*.ali" \
+	    --exclude="*.log" --exclude="*.a" \
+	    -cvzf $(DIST_FILE) $(distdir)
+
+# Update src/gen.ads with the latest SVN revision number.
+version:
+	gnatprep -DCONFIG_DIR='"$(config_dir)/base"' \
+	   `svn info | grep '^[UR][eR][Lv]' | sed -e 's,URL: \(.*\),-DURL="\1",' -e 's,Revision: ,-DREVISION=,'` \
+		  src/gen.gpb src/gen.ads
+
+install:	  install_dirs
+	$(INSTALL) bin/dynamo $(prefix)/bin/dynamo
+	$(INSTALL) doc/dynamo.1 $(prefix)/share/man/man1/dynamo.1
+	$(CP) config/*.properties $(prefix)/share/dynamo/base
+	$(CP) config/*.xml $(prefix)/share/dynamo/base
+	-rm -rf $(prefix)/share/dynamo/base/templates
+	-rm -rf $(prefix)/share/dynamo/base/commands
+	$(CP) -r config/templates $(prefix)/share/dynamo/base
+	$(CP) -r config/commands $(prefix)/share/dynamo/base
+	$(CP) config/db/*.xml $(prefix)/share/dynamo/base/db
+
+install_dirs:
+	${MKDIR} -p ${bindir}
+	${MKDIR} -p ${prefix}/share/dynamo/base
+	${MKDIR} -p ${prefix}/share/dynamo/base/db
+	${MKDIR} -p ${prefix}/share/man/man1
+
+uninstall:
+	rm -rf ${prefix}/share/dynamo/base
+	rm -f ${bindir}/dynamo
+	rm -f $(prefix)/share/man/man1/dynamo.1
+
+# prepare before releasing a new version of the package
+# (collect information about changes and SVN repository)
+prepare-release:
+	${SVN} update
+	${SVN} info > CHANGES
+	${SVN} log -v > ChangeLog

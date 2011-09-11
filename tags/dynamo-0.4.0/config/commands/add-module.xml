@@ -1,0 +1,20 @@
+<commands>
+   <command>
+      <name>add-module</name>
+      <title>Add a new module to the application</title>
+      <usage>add-module NAME</usage>
+      <help>
+         The new web page can be configured to use the given layout.
+         The layout file must exist to be used.  The default layout is 'layout'.");
+         You can create a new layout with 'add-layout' command.");
+      </help>
+      <param optional='false' name='moduleName' arg='NAME'/>
+      <basedir></basedir>
+      <template>add-module/module-config.xhtml</template>
+      <template>add-module/module-spec.xhtml</template>
+      <template>add-module/module-module-spec.xhtml</template>
+      <template>add-module/module-module-body.xhtml</template>
+      <template>add-module/module-beans-spec.xhtml</template>
+      <template>add-module/module-beans-body.xhtml</template>
+   </command>
+</commands>
