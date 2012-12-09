@@ -1,5 +1,3 @@
-#summary Dynamo Command
-
 
 == NAME ==
 
@@ -27,7 +25,7 @@ The
 *add-model* command will be used to create a database table mapping file.  The database mapping file
 describes how to map a database table into an Ada record type for the
 *ADO* framework.  The
-*generate* command is then used to build the Ada model files from the database mapping files.
+*generate* command is then used to build the Ada model files from the database mapping files or from a UML model.
 At the same time, it generates the SQL database creation schemas for MySQL and SQLite databases.
 
 The
@@ -68,7 +66,7 @@ templates provided by _dynamo_.
 
 === The create-project command ===
 {{{
-dynamo *create-project* [-l _{apache|gpl|proprietary}_] _name_ _author_ _email_
+dynamo *create-project* [-l _{apache|gpl|proprietary}_] [--web] [--tool] [--ado] _name_ _author_ _email_
 }}}
 
 Create a new project in the current working directory or in the
@@ -81,6 +79,15 @@ to run.  The
 *-l* option allows to choose the license headers.  The tool supports the generation
 of Apache, the GNU license or a proprietary license.  The author's name and email address
 can be specified in the command line so that the license headers integrates them correctly.
+
+The project type is controlled by one of the
+*--web* ,
+*--tool* or
+*--ado* option.  When
+*--ado* is specified, a command line project using Ada Database Objects is generated.  This type of
+project does not use Ada Server Faces nor Ada Web Application.  When
+*--web* option is specified, a full web application based on ASF and AWA is created.  The
+*--web* is the default if no other option is specified.
 
 === The dist command ===
 {{{
@@ -120,6 +127,14 @@ It will use the admin user for this connection. The database is created if it do
 not yet exist. If a user is specified in the connection string, a grant command is
 issued to create that user and allow him to access the new database.
 
+Example of connection string for MySQL database:
+{{{
+mysql://localhost:3306/my_db?user=joe&password=admin
+
+The MySQL server is running on localhost and TCP/IP port 3306.  The database name is
+_my_db _ and the user
+_joe _ is created for the application with the password
+_admin. _ 
 The database tables are created by using the
 _create-name-driver.sql _ script where
 _name _ represents the Dynamo project name.
@@ -201,6 +216,18 @@ Each Ada bean type must be registered in the
 _Module _ package.  The generated files are intended to be modified to implement the
 module functionality.
 
+=== The build-doc command ===
+{{{
+dynamo *build-doc _directory_*
+}}}
+
+Extract the documentation from the project source files and generate the
+project documentation.  The Ada specification files are scanned and the
+package specification header comment is used as the main structure for
+the project documentation.  The XML files are also scanned and the documentation
+is extracted from these files.  It can be merged together with other
+documentation to build up the final project user documentation.
+
 === The info command ===
 {{{
 dynamo *info*
@@ -223,17 +250,25 @@ Give an help description about a command.
 dynamo *generate [_model ... _]*
 }}}
 
-Generate the Ada model implementation from the XML model mappings.
+Generate the Ada model implementation from the XML model mappings or from a UML model.
 The Ada model files are generated in the
-*src/model* directory.  Developers should not modify those files by themselves.
+*src/model* directory.  Developers should not modify these files by themselves.
 When no file is specified, the
-*generate* command will read all the XML files stored in the
+*generate* command will read all the XML and XMI files stored in the
 *db* directory.  It will generate all the models found in those files.
 
 At the same time, the command generates the SQL files to create the
 database tables for the supported drivers (MySQL and SQLite).
 For each project, it generates a set of SQL files that can be used
 to create or delete the database tables.
+
+The
+*generate* command is able to read XMI 1.2 model files (UML 1.4) as well as ArgoUML files (.zargo).
+The UML model must use the
+_Dynamo _ UML profile and assign the
+_Table _ ,
+_PK _ and
+_Bean _ stereotypes to the model element for the generation to be activated.
 
 === The propset command ===
 {{{
@@ -258,6 +293,12 @@ This property defines the author name inserted in file headers.
 === author_email ===
 The author email address inserted in file headers.
 
+=== gnat.project ===
+The GNAT project file name which is used to build the project.  By default, the GNAT
+project file name is the same as the dynamo project name.  This property allows to
+specify a different name when the dynamo project name contains characters not allowed
+in GNAT project names.
+
 === license ===
 This property controls the license header in file headers.
 The following license names are recognized:
@@ -278,10 +319,14 @@ The default database connection string.
 This configuration file is read by
 _dynamo _ to configure various installation parameters necessary for the generation.
 
-=== /usr/share/dynamo/base/AdaMappings.xml ===
-This XML file defines the type mapping used in the
-_dynamo _ model files.  This mapping indicates for each basic type used in the
-XML model files, what is the target Ada type name.
+=== /usr/share/dynamo/base/mappings/AdaMappings.xml ===
+
+=== /usr/share/dynamo/base/mappings/MySQLMappings.xml ===
+
+=== /usr/share/dynamo/base/mappings/SQLiteMappings.xml ===
+These XML files define the type mapping used in the
+_dynamo _ model files.  These mapping indicate for each basic type used in the
+XML model files, what is the target Ada, MySQL or SQLite type name.
 
 === /usr/share/dynamo/base/commands ===
 This directory contains XML files that describe additional template commands.
@@ -290,6 +335,10 @@ This directory contains XML files that describe additional template commands.
 This directory contains the template files associated with
 _dynamo _ commands.
 
+=== /usr/share/dynamo/base/uml ===
+This directory contains the UML profiles that
+_dynamo _ reads to obtain global definitions.
+
 == SEE ALSO ==
 
 _gnatmake(1)_, _gcc(1)_, _yui-compressor(1)_, _pngcrush(1)_, _jpegtran(1)_
@@ -297,4 +346,3 @@ _gnatmake(1)_, _gcc(1)_, _yui-compressor(1)_, _pngcrush(1)_, _jpegtran(1)_
 == AUTHOR ==
 
 Written by Stephane Carrez.
-
