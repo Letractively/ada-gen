@@ -66,7 +66,7 @@ templates provided by _dynamo_.
 
 === The create-project command ===
 {{{
-dynamo *create-project* [-l _{apache|gpl|proprietary}_] [--web] [--tool] [--ado] _name_ _author_ _email_
+dynamo create-project [-l {apache|gpl|proprietary}] [--web] [--tool] [--ado] name author email
 }}}
 
 Create a new project in the current working directory or in the
@@ -91,7 +91,7 @@ project does not use Ada Server Faces nor Ada Web Application.  When
 
 === The dist command ===
 {{{
-dynamo *dist _target-dir_ [_package.xml_]*
+dynamo dist target-dir [package.xml]
 }}}
 
 After the project is compiled, this command allows to build the distribution files that
@@ -107,7 +107,7 @@ _package.xml _ description can compress the Javascript and CSS files by using th
 *jpegtran.* 
 === The create-database command ===
 {{{
-dynamo *create-database _model [connection] admin-user [admin-password]_*
+dynamo create-database model [connection] admin-user [admin-password]
 }}}
 
 The create-database command creates the database used by the application.
@@ -119,7 +119,7 @@ is read from the
 _database _ property in the
 *dynamo.xml* configuration file.  The connection string has the following form: 
 {{{
-_driver_://_host_:_port_/_database_
+driver://host:port/database
 }}}
 
 The command will connect to the database server specified by the connection string.
@@ -142,7 +142,7 @@ _name _ represents the Dynamo project name.
 
 === The create-plugin command ===
 {{{
-dynamo *create-plugin _name_ [ada | web]*
+dynamo create-plugin name [ada | web]
 }}}
 
 Create a new plugin for the current project.  The plugin sources are created in the
@@ -153,7 +153,7 @@ _Dynamo _ commands can be executed in the new plugin.
 
 === The add-layout command ===
 {{{
-dynamo *add-layout _name_*
+dynamo add-layout name
 }}}
 
 Create a new XHTML layout file.  The layout file is an XHTML facelet template which can
@@ -164,7 +164,7 @@ can provide different presentation styles.  The layout files are stored in the
 
 === The add-page command ===
 {{{
-dynamo *add-page _name_*
+dynamo add-page name
 }}}
 
 Create a new presentation page.  The presentation page is an XHTML facelet file
@@ -174,7 +174,7 @@ pages are stored in the
 
 === The add-model command ===
 {{{
-dynamo *add-model [_module_] _name_*
+dynamo add-model [module] name
 }}}
 
 Create a new database table model mapping.  The model mapping is an XML file that
@@ -187,7 +187,7 @@ will have the name *_project-name_.Model*.  The Ada record will have the name
 
 === The add-module command ===
 {{{
-dynamo *add-module _name_*
+dynamo add-module name
 }}}
 
 Add a new module to the project.  The module is composed of a set of Ada files
@@ -197,11 +197,11 @@ This is also the name of the directory that will contain the specific XHTML file
 used for the module.
 The following Ada packages are generated:
 {{{
-package _project_._module_;
+package project.module;
 
-package _project_._module_.Beans;
+package project.module.Beans;
 
-package _project_._module_.Module;
+package project.module.Module;
 }}}
 
 where
@@ -219,7 +219,7 @@ module functionality.
 
 === The build-doc command ===
 {{{
-dynamo *build-doc _directory_*
+dynamo build-doc directory
 }}}
 
 Extract the documentation from the project source files and generate the
@@ -231,7 +231,7 @@ documentation to build up the final project user documentation.
 
 === The info command ===
 {{{
-dynamo *info*
+dynamo info
 }}}
 
 Report information about the current project.  This command scans the GNAT projects to
@@ -241,14 +241,14 @@ _dynamo _ components that are used by the current project.
 
 === The help command ===
 {{{
-dynamo *help _name_*
+dynamo help name
 }}}
 
 Give an help description about a command.
 
 === The generate command ===
 {{{
-dynamo *generate [_model ... _]*
+dynamo generate [model ... ]
 }}}
 
 Generate the Ada model implementation from the XML model mappings or from a UML model.
@@ -273,7 +273,7 @@ _Bean _ stereotypes to the model element for the generation to be activated.
 
 === The propset command ===
 {{{
-dynamo *propset _name value_*
+dynamo propset name value
 }}}
 
 Set a project property to configure some commands provided by
