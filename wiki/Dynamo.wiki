@@ -130,6 +130,7 @@ issued to create that user and allow him to access the new database.
 Example of connection string for MySQL database:
 {{{
 mysql://localhost:3306/my_db?user=joe&password=admin
+}}}
 
 The MySQL server is running on localhost and TCP/IP port 3306.  The database name is
 _my_db _ and the user
