@@ -108,5 +108,24 @@ was also generated and it allows to save the instance by either inserting it in 
 The *Save* operation should be called within the context of a database
 transaction.
 
+To create the answer, let's create the answer instance:
+{{{
+   Answer   : Demo.Models.Answer_Ref;
+}}}
+
+The answer is associated with the question by using the
+`Set_Question` procedure.  This correspond to the UML association end
+which comes from the *Answer* to the *Question* class.
+
+
+{{{
+   --  Create an answer (in a separate transaction for the demo).
+   DB.Begin_Transaction;
+   Answer.Set_Question (Question);
+   Answer.Set_Author ("Lyra");
+   Answer.Set_Text ("You can use 'gnatmake -Pdemo' to build");
+   Answer.Save (DB);
+   DB.Commit;
+}}}
 
 <wiki:video url="http://www.youtube.com/watch?v=a8V9Om438wA"/>
