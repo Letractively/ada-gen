@@ -1,13 +1,30 @@
 #summary Tutorial to use Dynamo to build a database Ada application
 
-= Introduction =
+This article explains how to use Dynamo to quickly setup a new Ada
+project, design the data model of the application, generate the Ada
+model files, build the database and use the Ada Database Objects
+library to populate the database using the data model.
 
-Add your content here.
-
-<wiki:video url="http://www.youtube.com/watch?v=2VOZ4_p7h2o"/>
-
+The article assumes that you have installed Dynamo, the ArgoUML
+application.
 
 == Setting up ArgoUML to use Dynamo UML profiles ==
+
+Before anything, you should setup ArgoUML to use the Dynamo UML
+profile.  This step must be done only once for your ArgoUML application.
+Dynamo provides a UML profile which contains stereotypes and data types
+that are used for the data modeling of your database.  It is necessary
+to tell ArgoUML where the Dynamo UML profile is located.
+
+To know where the Dynamo UML profile is installed, run the following
+command:
+
+{{{
+dynamo -v
+}}}
+
+After starting ArgoUML, go in *Settings* => *Profiles* and add
+the UML directory in the list of directories that ArgoUML looks for the UML profiles.  These steps are described in the following video:
 
 <wiki:video url="http://www.youtube.com/watch?v=M25eAm3Mly8"/>
 
