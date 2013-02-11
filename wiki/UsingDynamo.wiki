@@ -28,9 +28,22 @@ the UML directory in the list of directories that ArgoUML looks for the UML prof
 
 <wiki:video url="http://www.youtube.com/watch?v=M25eAm3Mly8"/>
 
-http://youtu.be/M25eAm3Mly8
-
 == Creating an Ada database application using Dynamo and Eclipse ==
+
+Dynamo contains a *create-project* command that you can use to
+quickly setup a new Ada project.  Two project templates are defined:
+
+  * An ADO template intended to be used for general purpose database applications.
+  * An Ada Web Application template targeted as a more complete application with database access and web pages. 
+
+This article focuses on the Ada database application template.
+To use the *create-project* command, you will have to give a project name.  It will be used as the main Ada package name.  You should also specify you name or email address so that file headers are customized accordingly.  You may also choose the license you want to use for the project.
+
+The command to generate the demo application presented in the video is:
+
+{{{
+dynamo create-project --ado demo Iorek.Byrnison@svalbard.com
+}}}
 
 <wiki:video url="http://www.youtube.com/watch?v=MvMUl1QGvB4"/>
 
