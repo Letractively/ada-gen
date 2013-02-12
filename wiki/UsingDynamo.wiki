@@ -45,6 +45,13 @@ The command to generate the demo application presented in the video is:
 dynamo create-project --ado demo Iorek.Byrnison@svalbard.com
 }}}
 
+After creating your project, you should run the `configure` script
+to setup the project and get the GNAT project files configured.
+
+{{{
+./configure
+}}}
+
 <wiki:video url="http://www.youtube.com/watch?v=MvMUl1QGvB4"/>
 
 == Database Modeling with ArgoUML for Ada applications ==
@@ -126,6 +133,12 @@ which comes from the *Answer* to the *Question* class.
    Answer.Set_Text ("You can use 'gnatmake -Pdemo' to build");
    Answer.Save (DB);
    DB.Commit;
+}}}
+
+You will build the project as follows:
+
+{{{
+make
 }}}
 
 <wiki:video url="http://www.youtube.com/watch?v=a8V9Om438wA"/>
