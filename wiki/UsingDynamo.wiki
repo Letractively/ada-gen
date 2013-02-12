@@ -142,3 +142,5 @@ make
 }}}
 
 <wiki:video url="http://www.youtube.com/watch?v=a8V9Om438wA"/>
+
+You may download the files at [http://code.google.com/p/ada-gen/downloads/list]
